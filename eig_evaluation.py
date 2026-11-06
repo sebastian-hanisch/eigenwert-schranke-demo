@@ -212,7 +212,7 @@ def _refname(v: dict) -> str:
 def verdict_eb(s: Settings, v: dict):
     sp = v["spectral"]
     negative = sp.eb < 0
-    tail = (f"Die Eigenwertschranke liegt unter 0 und ist damit schwächer als die triviale Schranke 0 (Kosten sind nie negativ): der große positive Eigenwert des nichtnegativen Flusses wird mit dem kleinsten Eigenwert des Abstands gepaart und zieht die Summe nach unten. "
+    tail = (f"Die Eigenwertschranke liegt unter 0 und ist damit schwächer als die triviale Schranke 0 (Kosten sind nie negativ): die gepaarte Summe ist wegen Spur 0 beider Matrizen nicht positiv. "
             if negative else "Die Eigenwertschranke liegt über 0. ")
     return ("warning" if negative else "info"), (_head(s, v) + f"Die Eigenwertschranke ist **{num(sp.eb)}**; {_refname(v)} ist {v['ref']}, die Gilmore–Lawler-Schranke {num(v['glb'])}. " + tail +
                                                f"Der Rechenaufwand: zwei Eigenwertzerlegungen.")
@@ -272,7 +272,7 @@ def verdict_large(by_n: dict):
     totals = {n: len(pooled(by_n[n])) for n in sizes}
     parts = "; ".join(f"n = {n}: PB {pct(med[n]['gap_pb'], 1)}, GLB {pct(med[n]['gap_glb'], 1)} (PB besser in {wins[n]} von {totals[n]})" for n in sizes)
     grows = len(sizes) > 1 and all(med[sizes[i + 1]]["gap_glb"] > med[sizes[i]]["gap_glb"] for i in range(len(sizes) - 1))
-    claim = "Die Lücke der Gilmore–Lawler-Schranke wächst mit n" if grows else "Die Lücke der Gilmore–Lawler-Schranke wächst in dieser Messung nicht gleichmäßig mit n"
+    claim = "Die ausgewiesene obere Grenze der Lücke der Gilmore–Lawler-Schranke wächst mit n" if grows else "Die ausgewiesene obere Grenze der Lücke der Gilmore–Lawler-Schranke wächst in dieser Messung nicht gleichmäßig mit n"
     return "info", (f"Schranken gegen die beste gefundene Lösung (beste von {C.STARTS} Abstiegen), Median der Lücke über alle Familien: {parts}. {claim}. Die Zahlen sind obere Grenzen der wahren Lücke: das Optimum ist unbekannt.")
 
 

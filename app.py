@@ -68,7 +68,7 @@ st.markdown(
     """
 **Was sagt das Spektrum, und was die Projektion?** Dieselbe Aufgabe wie in Stück 1 bis 3: `n` Bauteile auf `n` Plätze, Kosten gleich der Summe aus **Fluss mal Abstand** über alle Paare. Statt einer Zuordnung (Gilmore–Lawler, Stück 3) nutzt die **Eigenwertschranke**
 nur die Eigenwerte der Fluss- und der Abstandsmatrix: Permutationsmatrizen sind orthogonal, und für orthogonale Matrizen lässt sich die Summe nach unten durch gepaarte Eigenwerte abschätzen. Die **projizierte Schranke** rechnet zusätzlich in dem Raum, der zum
-Einsvektor senkrecht steht, und schätzt den linearen Teil getrennt ab. Beide Schranken kosten nur zwei bis drei Eigenwertzerlegungen. Gemessen wird, wie weit sie unter dem Optimum liegen und ob sie die Gilmore–Lawler-Schranke schlagen.
+Einsvektor senkrecht steht, und schätzt den linearen Teil getrennt ab. Jede der beiden Schranken kostet zwei Eigenwertzerlegungen. Gemessen wird, wie weit sie unter dem Optimum liegen und ob sie die Gilmore–Lawler-Schranke schlagen.
 Die sechs Familien der Flussmatrix sind **eigene, einfache Erfindungen** (aus Stück 2), keine echten Platinen; die projizierte Schranke ist hier eine **eigene vereinfachte Herleitung**, nicht die Originalfassung der Literatur.
 Stück 4 der Reihe „Anordnen: relaxieren und runden“.
 
@@ -79,7 +79,7 @@ Weiter unten: **fünf Experimente** (**🔬**), **🚧 Wo die Annahmen enden** u
 with st.expander("So funktioniert es", expanded=True):
     st.markdown(
         """
-1. **Eigenwertschranke (EB):** die Eigenwerte von `F` (aufsteigend) und `D` (absteigend) werden paarweise multipliziert und summiert, halbiert. Weil `F` nichtnegativ ist, hat sie einen großen positiven Eigenwert, der mit dem kleinsten Eigenwert von `D` gepaart wird: die Schranke ist oft **negativ**.
+1. **Eigenwertschranke (EB):** die Eigenwerte von `F` (aufsteigend) und `D` (absteigend) werden paarweise multipliziert und summiert, halbiert. Weil `F` und `D` die Diagonale 0 haben (Spur 0), ist die gepaarte Summe nicht positiv; bei nichtnegativen Kosten ist die Schranke damit **negativ** oder null und schwächer als die triviale Schranke 0. Der große positive Eigenwert von `F` wird dabei mit dem kleinsten von `D` gepaart.
 2. **Projektion:** jede Permutationsmatrix ist `X = e eᵀ/n + V Y Vᵀ` (`V`: Basis senkrecht zum Einsvektor `e`). Das zerlegt die Kosten **exakt** in einen konstanten, einen linearen und einen quadratischen Teil; der lineare wird durch Sortieren, der quadratische durch gepaarte Eigenwerte der projizierten Matrizen nach unten abgeschätzt.
 3. **Die Lücke:** (Optimum − Schranke) / Optimum. Bei Instanzen, die sich nicht aufzählen lassen, steht die beste gefundene Lösung (beste von 200 steilsten Abstiegen) an der Stelle des Optimums; die Lücke ist dann **höchstens** so groß.
 4. **Zum Vergleich** wird in jeder Instanz auch die Gilmore–Lawler-Schranke gerechnet (Stück 3).
@@ -175,11 +175,11 @@ else:
 # --- Experimente 3 und 4: Vergleiche mit aufgezähltem Optimum ----------------------------------------------------------------------------------
 
 st.subheader("🔬 Experiment 3: Wie weit liegen die Schranken unter dem Optimum?")
-st.caption("Je Familie 20 feste Instanzen (Seeds 100000 bis 100019), alle Anordnungen aufgezählt. Die Größe wählen und die Rechnung starten (n = 6: Sekunden, n = 8: rund zwei Minuten).")
+st.caption("Je Familie 20 feste Instanzen (Seeds 100000 bis 100019), alle Anordnungen aufgezählt. Die Größe wählen und die Rechnung starten (n = 6: Sekunden, n = 8: rund vier Minuten).")
 sweep_n = st.radio("Größe des Vergleichs", C.SWEEP_SIZES, key="sweep_n", horizontal=True, format_func=lambda x: f"n = {x}")
 done = st.session_state.setdefault("sweeps_done", {})
 if not done.get(sweep_n):
-    wait = "wenige Sekunden" if sweep_n == 6 else "rund zwei Minuten (auf Streamlit Cloud eher länger)"
+    wait = "wenige Sekunden" if sweep_n == 6 else "rund vier Minuten (auf Streamlit Cloud eher länger)"
     st.info(f"Der Vergleich für n = {sweep_n} rechnet 6 Reihen zu je 20 Instanzen und dauert {wait}. Mit dem Knopf starten:")
     if st.button(f"⏱️ Vergleich für n = {sweep_n} rechnen", key=f"sweep_button_{sweep_n}"):
         bar = st.progress(0.0, text="Rechne die Familien …")
@@ -260,7 +260,7 @@ st.markdown(
 | **Die projizierte Schranke ist eine vereinfachte Eigenherleitung** | Sie folgt der Idee der projizierten Eigenwertschranke, ist aber nicht ihre Originalfassung; die Literatur kennt stärkere Fassungen (etwa mit Verschiebungen der Matrizen). Alle Befunde gelten für diese Fassung. | – |
 | **Die sechs Familien sind erfunden** | Echte Platinen oder QAPLIB-Instanzen haben andere Strukturen; „bei dichtem Fluss ist die projizierte Schranke besser“ gilt nur für diese Familien. | – |
 | **Das Optimum ist nur bis n = 9 bekannt** | Ab n = 12 steht die beste von 200 steilsten Abstiegen an seiner Stelle; die Lücken sind dann obere Grenzen der wahren Lücke. | Stück 8 (Branch and Bound) |
-| **Nichtnegative Flüsse und Abstände** | Gerade weil beide Matrizen nichtnegativ sind, hat jede einen großen positiven Eigenwert, und die gepaarte Summe der Eigenwertschranke wird negativ. Bei anderen Matrizen (etwa mit Vorzeichenwechsel) kann sie brauchbar sein. | – |
+| **Diagonale 0 (Spur 0)** | Weil Fluss- und Abstandsmatrix die Diagonale 0 haben, ist die gepaarte Summe der Eigenwertschranke nicht positiv, unabhängig vom Vorzeichen der Einträge; bei nichtnegativen Kosten ist sie damit schwächer als die triviale Schranke 0. Stärkere Fassungen der Literatur verschieben die Matrizen vorher (hier nicht umgesetzt). | – |
 | **Wenige Instanzen** | 20 Instanzen je Familie (n = 6, 8) und 10 (n ≥ 12); die Rangkorrelationen schwanken um grob ±0,19 bzw. ±0,28. | – |
 | **Nur drei Schranken** | Linearisierung (Stück 5), doppeltstochastische Relaxation (Stück 6) und die semidefinite Schranke (Stück 7) fehlen. | Stück 5 bis 7 |
 """
@@ -275,7 +275,7 @@ with st.expander("📐 Mathematische Formulierung"):
 
 **Eigenwertschranke.** $X$ ist orthogonal. Für symmetrische $F$, $D$ und orthogonales $X$ gilt $\operatorname{tr}(F X D X^\top) \ge \sum_i \lambda_i(F)\,\lambda_{n+1-i}(D)$ (Eigenwerte von $F$ aufsteigend, von $D$ absteigend gepaart). Also
 $$\mathrm{EB} = \tfrac12 \sum_i \lambda_i(F)\,\lambda_{n+1-i}(D).$$
-Sie braucht nur zwei Eigenwertzerlegungen. Weil $F$ nichtnegativ ist, ist der größte Eigenwert positiv und wird mit dem kleinsten von $D$ (meist negativ) gepaart: die Schranke ist oft negativ.
+Sie braucht zwei Eigenwertzerlegungen. Weil $F$ und $D$ die Diagonale 0 haben (Spur 0), ist die gepaarte Summe nicht positiv; der größte Eigenwert von $F$ wird dabei mit dem kleinsten von $D$ gepaart und zieht die Summe nach unten.
 
 **Projektion.** Sei $e$ der Einsvektor und $V \in \mathbb{R}^{n \times (n-1)}$ mit orthonormalen Spalten, $V^\top e = 0$. Jede Permutationsmatrix lässt sich schreiben als $X = \tfrac1n e e^\top + V Y V^\top$ mit orthogonalem $Y \in \mathbb{R}^{(n-1)\times(n-1)}$. Mit $u = Fe$, $w = De$, $s_F = e^\top F e$, $s_D = e^\top D e$, $\hat F = V^\top F V$, $\hat D = V^\top D V$ gilt **exakt**
 $$\operatorname{tr}(F X D X^\top) = -\frac{s_F s_D}{n^2} + \frac{2}{n}\, u^\top X w + \operatorname{tr}(\hat F\, Y\, \hat D\, Y^\top).$$
