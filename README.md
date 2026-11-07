@@ -1,9 +1,8 @@
 # Eigenwertschranke und Projektion – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-eigenwert-schranke-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-eigenwert-schranke-demo.streamlit.app/)**
 
-Stück 4 von 15 der **Konzepte-Reihe „Anordnen: relaxieren und runden“** für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (die Konzepte-Seite der Reihe gibt es noch nicht). Stück 3, [Die Gilmore–Lawler-Schranke](https://github.com/sebastian-hanisch/gilmore-lawler-demo), beweist eine untere Schranke mit einer linearen **Zuordnung**. Dieses Stück macht dieselbe Aufgabe mit einem anderen Vehikel, dem **Spektrum**: Eigenwerte von Flussmatrix und Abstandsmatrix. Kante der Reihe: *Kontrast*.
+Stück 4 von 15 der **Konzepte-Reihe „Anordnen: relaxieren und runden“** für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (die [Konzepte-Seite der Reihe](https://sebastianhanisch.net/konzepte-anordnen.html)). Stück 3, [Die Gilmore–Lawler-Schranke](https://github.com/sebastian-hanisch/gilmore-lawler-demo), beweist eine untere Schranke mit einer linearen **Zuordnung**. Dieses Stück macht dieselbe Aufgabe mit einem anderen Vehikel, dem **Spektrum**: Eigenwerte von Flussmatrix und Abstandsmatrix. Kante der Reihe: *Kontrast*.
 
 ## Warum dieses Problem
 
