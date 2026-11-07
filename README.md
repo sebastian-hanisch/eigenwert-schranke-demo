@@ -55,7 +55,7 @@ Alle Zahlen stehen in `tests/test_claims.py` (deterministisch bis auf die letzte
 
 - **Tests** (`pytest tests/`): **237 Tests**, rund vier Minuten (Windows, Python 3.14). Handwerte (die drei Handbeispiele mit Eigenwerten und Termen von Hand, Kosten, Zuordnung, Statistik), Eigenschaften (die Zerlegung ist eine Gleichung für jede Permutation, die projizierte Schranke hängt nicht von der Wahl der Basis ab, Spur- und Normidentitäten der Eigenwerte, EB ≤ PB ≤ Optimum für jede Familie, Invarianz unter Umnummerierung und Skalierung), Orakel (Aufzählung für die Gültigkeit; `scipy` für Eigenwerte, Zuordnung und Rangkorrelation, nur mit `requirements-dev.txt`), Randfälle (zwei Bauteile, Nullfluss, ungültige Eingaben), Verdikte an handgesetzten Werten, Abbildungen, PDF, Rauchtest und Pfade der App (jede Familie, große Instanzen, Knopf `n = 9`, beide Vergleiche), Layout, Footer und Laufzeit-Importe. `test_claims.py` rechnet jede Zahl dieser README nach (rund zwei Minuten).
 - **Kopie:** Tests vergleichen die Familien mit denen von Stück 1 bis 3, sofern die Schwester-Repos nebenan liegen.
-- **Nicht getestet:** Zeiten; kein Mutationstest; Linux-CI: grün (235 Tests bestanden, 2 übersprungen, Python 3.12; letzter Lauf auf `main`).
+- **Nicht getestet:** Zeiten; kein Mutationstest; Linux-CI: grün (235 bestanden, 2 übersprungen, Python 3.12; letzter Lauf auf `main`).
 
 ## Dateistruktur
 
